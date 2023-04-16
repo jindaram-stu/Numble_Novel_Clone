@@ -50,34 +50,35 @@ public class NovelController {
 
     // 소설 생성
     @PostMapping("/novel")
-    public ResponseEntity<SuccessResponse> createNovel(@RequestBody NovelCreateRequest ncr) {
+    public ResponseEntity<NovelCreateRequest> createNovel(@RequestBody NovelCreateRequest ncr) {
         novelService.createNovel(ncr);
-        return new ResponseEntity<>(new SuccessResponse("성공적으로 소설을 등록했습니다."), HttpStatus.OK);
+        return new ResponseEntity<>(ncr, HttpStatus.OK);
     }
 
     // 소설 에피소드 생성
     @PostMapping("/novel/episode")
-    public String createNovelEpisode(@RequestBody NovelEpisodeCreateRequest necr) {
+    public ResponseEntity<NovelEpisodeCreateRequest> createNovelEpisode(@RequestBody NovelEpisodeCreateRequest necr) {
         novelService.createNovelEpisode(necr);
-        return "성공적으로 소설 에피소드를 등록했습니다.";
+        return new ResponseEntity<>(necr, HttpStatus.OK);
     }
 
     // 선호작 등록
     @PostMapping("/novel/favorite")
-    public void createFavoriteNovel(@AuthenticationPrincipal AbstractUser abstractUser,
+    public ResponseEntity<NovelSlimResponse> createFavoriteNovel(@AuthenticationPrincipal AbstractUser abstractUser,
                                     @RequestParam Long novelId) {
         favoriteNovelService.register(abstractUser.getUser(), novelId);
+        return new ResponseEntity<>(new SuccessResponse("성공적으로 선호작을 등록했습니다."), HttpStatus.OK);
     }
     
     // 마지막 읽은 페이지 기록
     @PostMapping("/novel/lastReadedPage")
-    public String recordLastReadPage(@AuthenticationPrincipal AbstractUser abstractUser,
+    public ResponseEntity<LastReadedPageRequest> recordLastReadPage(@AuthenticationPrincipal AbstractUser abstractUser,
                                    @RequestBody LastReadedPageRequest request) {
         String key = abstractUser.getUser().getId() + "::lastReadedPage";
         stringRedisTemplate.opsForHash().put(key,
                                              request.getNovelId().toString(),
                                        request.getNovelEpisodeId() + ":" + request.getPage());
-        return "성공적으로 선호작을 등록했습니다.";
+        return new ResponseEntity<>(request, HttpStatus.OK);
     }
 
     @GetMapping("/novel/lastReadedPage")

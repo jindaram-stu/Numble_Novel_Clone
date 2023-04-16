@@ -29,7 +29,7 @@ public class PaymentService {
     @Transactional
     public void paymentNovel(NovelPaymentRequest request, User loginUser) {
         if (!redisLockRepository.lock(loginUser.getId(), "PAYMENT_NOVEL")) {
-            return;
+            throw new IllegalArgumentException("이미 구매가 진행중입니다.");
         }
         User user = userRepository.findById(loginUser.getId())
                 .orElseThrow(() -> new UserNotFoundException("유저를 찾을 수 없습니다."));

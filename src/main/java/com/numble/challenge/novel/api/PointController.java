@@ -23,11 +23,12 @@ public class PointController {
     private final PointService pointService;
     private final UserRepository userRepository;
 
+    // 포인트 충전
     @PostMapping("/point")
-    public ResponseEntity chargePoint(@RequestBody PointChargeRequest pointChargeRequest,
+    public ResponseEntit<y<PointChargeRequest> chargePoint(@RequestBody PointChargeRequest pointChargeRequest,
                                       @AuthenticationPrincipal AbstractUser abstractUser) {
         pointService.chargePoint(abstractUser.getUser(), pointChargeRequest.getChargePoint());
-        return ResponseEntity.ok("성공적으로 충전했습니다.");
+        return new ResponseEntity<>(pointChargeRequest, HttpStatus.OK);
     }
 
 }

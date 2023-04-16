@@ -24,15 +24,8 @@ public class RankingController {
     public List<RankingResponse> allRanking() {
         return rankingService.loadAllNovelRanking();
     }
-    @LogExecutionTime
-    @GetMapping("/ranking/all/nocache")
-    public List<RankingResponse> allRankingNoCache() {
-        return rankingService.loadAllNovelRankingNoCache();
-    }
-
 
     @GetMapping("/ranking/free")
-
     public List<RankingResponse> freeRanking() {
         return rankingService.loadFreeNovelRanking();
     }

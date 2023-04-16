@@ -23,9 +23,8 @@ public class PointService {
     @Transactional
     public void chargePoint(User user, Long point) {
         if (!redisLockRepository.lock(user.getId(), "CHARGE_POINT")) {
-            return;
+            throw new IllegalArgumentException("이미 충전이 진행중입니다.");
         }
-        log.info("{}",point);
         user.chargePoint(point);
         userRepository.save(user);
         chargeLogRepository.save(createChargeLog(user, point));

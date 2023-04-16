@@ -25,14 +25,14 @@ public class UserService {
         userRepository.save(createUser(request));
     }
 
-    public String login(UserLoginRequest loginRequest) {
+    public Long login(UserLoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("이메일이 틀렸습니다."));
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
-        return "로그인 성공";
+        return user.getId();
     }
 
     private User createUser(UserCreateRequest userCreateRequest) {
@@ -43,9 +43,4 @@ public class UserService {
                 .build();
     }
 
-//    @PostConstruct
-    public void initUser() {
-        UserCreateRequest request = new UserCreateRequest("jinsb1999@naver.com", "1q2w3e4r!", "진다람");
-        signUp(request);
-    }
 }

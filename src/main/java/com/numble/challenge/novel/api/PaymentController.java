@@ -19,11 +19,12 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
+    // 소설 구매
     @PostMapping("/pay")
-    public String paymentNovel(@RequestBody NovelPaymentRequest novelPaymentRequest,
+    public ResponseEntity<NovelPaymentRequest> paymentNovel(@RequestBody NovelPaymentRequest novelPaymentRequest,
                              @AuthenticationPrincipal AbstractUser abstractUser) {
         paymentService.paymentNovel(novelPaymentRequest, abstractUser.getUser());
-        return "성공적으로 구매하였습니다.";
+        return new ResponseEntity<>(novelPaymentRequest, HttpStatus.OK);
     }
 
 }

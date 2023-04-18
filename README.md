@@ -7,7 +7,7 @@
 [API 상세](https://github.com/jindaram-stu/Numble_Novel_Clone/blob/master/API.md)
 
 ## 3. 요구사항
-[요구사항 문서](https://www.notion.so/jinsb/78a2aef8230c42448831353ba5e5be4d)
+[요구사항 문서](https://www.notion.so/jinsb/ec78c7b166cc4bcea1453ef009630d9f)
 
 ## 4. ERD
 ![img](https://velog.velcdn.com/images/jindaram-stu/post/fa0b46d1-179e-44c9-989a-c8b5e61f105c/image.png)
